@@ -1,21 +1,15 @@
 from database import Database
-from bills import *
-from identity import *
-from reports import * 
-
-
-
-
-
-
-
+from bills import ProductBill
+from identity import Account
+from reports import *
 
 
 def main():
   # loading 
   db = Database(dbname="database")
   # create tables here 
-  #
+  db.createtableifnotexists("Product Bill", ProductBill,ProductBill.fromstring)
+  db.createtableifnotexists("Accounts",Account,Account.fromstring)
   while(True):
     # check if there is any account 
     # if it is ask for log in 
