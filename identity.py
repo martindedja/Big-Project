@@ -85,23 +85,16 @@ class Login:
 #MathiasD/mathias.dariu@gmail.com/2341/MathiasDariu/069321433215/18  
 
 
-class Accounts(Account):
-  def __init__(self,Username,Email,Password,FullName,PhoneNumber,Age):
-    super().__init__(Username,Email,Password,FullName,PhoneNumber,Age)
-  def toString(self):
-    #format from objects to string to save in table
-    string = str(self.username) + "/" + str(self.email) + "/" + str(self.password) +  "/" + str(self.full_name) + "/" + str(self.phone_no) + "/" + str(self.age)
-    return string
-
-  @classmethod
-  def createAcc(cls):
+class Accounts():
+  @staticmethod
+  def createAcc(db):
     class_input = input("Enter the account's username, email, password, fullname, phoneno and age, all divided by /")
     cl1 = class_input.split("/")
     cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],int(cl1[5]))
     db.appendObjectInto("Accounts",cl2)
 
-  @classmethod
-  def deleteAcc(cls):
+  @staticmethod
+  def deleteAcc(db):
     username = input("Enter account's username: ")
     password = input("Enter password to confirm deletion: ")
     if (len(db.getObjectsFrom("Accounts", lambda x:x.username == username)) == 1):
@@ -112,8 +105,8 @@ class Accounts(Account):
     else:
       print("Username does not exist!")
 
-  @classmethod
-  def modifyAcc(cls):
+  @staticmethod
+  def modifyAcc(db):
     username = input("Enter your account's username: ")
     password = input("Enter your account's password: ")
     if (len(db.getObjectsFrom("Accounts", lambda x:x.username == username)) != 0):
