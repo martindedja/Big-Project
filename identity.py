@@ -1,7 +1,7 @@
 #accounts and login
 #DONE AND WORKING
 from database import Database
-
+import getpass
 db = Database(dbname="database")
 
 class Account:
@@ -26,46 +26,36 @@ class Account:
     return cls(objects[0],objects[1],objects[2],objects[3],objects[4],objects[5])
   
 
-#Getters#########################################
+#------------------Getters------------------#
   def getUsername(self):
     return self.username
-
   def getEmail(self):
     return self.email
-  
   def getPassword(self):
     return self.password
-
   def getFullName(self):
     return self.full_name
-
   def getPhoneNumber(self):
     return self.phone_no
-
   def getAge(self):
     return self.age
   
-#Setters#######################################
+#------------------Setters------------------#
   def setUsername(self,username):
     self.username = username
-
   def setEmail(self, email):
     self.email = email
-  
   def setPassword(self, password):
     self.password = password
-   
   def setFullName(self, fullname):
     self.full_name = fullname
-   
   def setPhoneNumber(self, phonenumber):
     self.phone_no = phonenumber
-
   def setAge(self, age):
     self.age = age
 
 
-class Login:
+class Login():
   def __init__(self, username, password):
     self.username = username
     self.password = password
@@ -75,11 +65,13 @@ class Login:
     objects =  y.split("/")
     return cls(objects[0],objects[1],objects[2],objects[3],objects[4],objects[5])
 
-  def CheckCredentials(self):
-    object = db.getObjectsFrom("Accounts",lambda x: x.username == self.username)
-    if object[0].password == self.password:
+  @staticmethod
+  def CheckCredentials(db):
+    username = input("Username: ")
+    object = db.getObjectsFrom("Accounts",lambda x: x.username == username)
+    password = getpass.getpass("Password: ")
+    if object[0].password == password:
       print("Success")
-      #REDIRECT ASK NIKOLIN
     else:
       print("Wrong credentials")
 #MathiasD/mathias.dariu@gmail.com/2341/MathiasDariu/069321433215/18  
@@ -88,7 +80,8 @@ class Login:
 class Accounts():
   @staticmethod
   def createAcc(db):
-    class_input = input("Enter the account's username, email, password, fullname, phoneno and age, all divided by /")
+    print("Enter the account's username, email, password, fullname, phone no and age, all divided by /: ")
+    class_input = str(input())
     cl1 = class_input.split("/")
     cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],int(cl1[5]))
     db.appendObjectInto("Accounts",cl2)

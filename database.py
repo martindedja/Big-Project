@@ -46,7 +46,7 @@ class Database:
         table = self.tables[tname]
         # after taking table data open file
         with open(table.getpath() ,"a") as fp:
-            for  record in records:
+            for record in records:
                 # if object is of specififed type
                 if table.checkType(record):
                     # write it into the file
