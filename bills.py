@@ -62,11 +62,6 @@ class FaturaMujore:
 
 
 
-
-
-
-
-
 class RandomBill(FaturaMujore):
   def __init__(self,ID,total,month,year,status,type_,username):
     super().__init__(ID,total,month,year,status,type_,username)
@@ -250,14 +245,14 @@ class ManageBills():
       clas_input = str(input())
       cls1 = clas_input.split("/")
       cls2 = FaturaMujore(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6])
-      db.appendObjectInto("Fatura Mujore",cls2)
+      db.appendObjectInto("All Bills",cls2)
       print("Bill added!")
     elif user_input == 2:
       print("Enter the bill's ID, total, month, year, status,type,your username || all seperated by /: ")
       clas_input = str(input())
       cls1 = clas_input.split("/")
       cls2 = RandomBill(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6])
-      db.appendObjectInto("Random Bill",cls2)
+      db.appendObjectInto("All Bills",cls2)
       print("Bill added!")
     
     elif user_input == 3:
@@ -265,7 +260,7 @@ class ManageBills():
       clas_input = str(input())
       cls1 = clas_input.split("/")
       cls2 = GasBill(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6],cls1[7])
-      db.appendObjectInto("Gas Bill",cls2)
+      db.appendObjectInto("All Bills",cls2)
       print("Bill added!")
 
     elif user_input == 4:
@@ -273,7 +268,7 @@ class ManageBills():
       clas_input = str(input())
       cls1 = clas_input.split("/")
       cls2 = ProductBill(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6],cls1[7])
-      db.appendObjectInto("Product Bill",cls2)
+      db.appendObjectInto("All Bills",cls2)
       print("Bill added!")
     
     else:
@@ -282,9 +277,37 @@ class ManageBills():
 
   @staticmethod
   def filerBill(db):
-    pass
-  
+    print("Press 1 to filter by Total: ")
+    print("Press 2 to filter by Deadline: ")
+    print("Press 3 to filter by Type: ")
+    user_input= int(input())
+    if user_input == 3:
+      print("Press 1 for Monthly Bill: ")
+      print("Press 2 for Gas Bill: ")
+      print("Press 3 for Product Bill: ")
+      user_input2 = int(input())
+      if user_input2 == 1:
+        pass
+      elif user_input2 == 2:
+        pass
+      elif user_input2 == 3:
+        pass
+      else:
+        pass
+    elif user_input == 1:
+      pass
+    
+    elif user_input == 2:
+      pass
+    
+    else:
+      pass
 
+  
+  @staticmethod
   def deleteBill(db):
     pass
 
+  @staticmethod
+  def showmybills(db):
+    pass

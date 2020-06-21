@@ -48,9 +48,9 @@ class Database:
         with open(table.getpath() ,"a") as fp:
             for record in records:
                 # if object is of specififed type
-                if table.checkType(record):
+                #if table.checkType(record):##################
                     # write it into the file
-                    fp.write(record.toString()+"\n")
+                fp.write(record.toString()+"\n")
             fp.close()
     def appendObjectInto(self,tname,obj):
         self.appendObjectsInto(tname,[obj])

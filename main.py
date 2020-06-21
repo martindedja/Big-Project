@@ -3,17 +3,27 @@ from bills import *
 from identity import Account,Accounts,Login
 from reports import *
 import getpass
+
 #Grupi 4 esht jet
 
 
 def main():
-  # loading 
+  print("          (         )            (               ")
+  print(" (        )\ )   ( /(            )\ )         )  ")
+  print(" )\ )    (()/(   )\())      (   (()/(      ( /(  ")
+  print("(()/(     /(_)) ((_)\       )\   /(_))     )\()) ")
+  print(" /(_))_  (_))     ((_)   _ ((_) (_))      ((_)\  ")
+  print("(_)) __| | _ \   / _ \  | | | | | _ \    | | (_) ")
+  print("  | (_ | |   /  | (_) | | |_| | |  _/    |_  _|  ")
+  print("   \___| |_|_\   \___/   \___/  |_|        |_|   ")
+
   db = Database(dbname="database")
   # create tables here 
-  db.createtableifnotexists("Fatura Mujore", FaturaMujore,FaturaMujore.toString)
-  db.createtableifnotexists("Random Bill", RandomBill,RandomBill.toString)
-  db.createtableifnotexists("Gas Bill", GasBill,GasBill.toString)
-  db.createtableifnotexists("Product Bill",ProductBill,ProductBill.toString)
+  db.createtableifnotexists("All Bills", FaturaMujore,FaturaMujore.toString)
+  tprint = ("Group 4")
+  #db.createtableifnotexists("Random Bill", RandomBill,RandomBill.toString)
+  #db.createtableifnotexists("Gas Bill", GasBill,GasBill.toString)
+  #db.createtableifnotexists("Product Bill",ProductBill,ProductBill.toString)
 
 
   db.createtableifnotexists("Accounts",Account,Account.fromstring)
