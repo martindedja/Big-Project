@@ -19,7 +19,7 @@ class Database:
             fd = open(self.mainpath+path.sep+tname,"w")
             fd.close()
         else :
-            # science the file already exists just add the entry into the dictionary
+            # since the file already exists just add the entry into the dictionary
             self.tables[tname]=Table(self.mainpath+path.sep+tname,ttype,toObject)
     # get a list of objects from a specific table. you can also filter by a lambda function
     def getObjectsFrom(self,tname,condition=lambda a:True):

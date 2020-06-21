@@ -59,35 +59,6 @@ class FaturaMujore:
       self.type_ = type_
   def setUsername(self, username):
       self.username = username
-  
-
-
-#21/2134/4/2020/paid/SEX BILL/MathiasD
-class ManageBills():
-  @staticmethod
-  def createBill(db):
-    #dict = {1:FaturaMujore, 2:RandomBill}
-    print("Type 1 for FaturaMujore and type 2 For RandomBill")
-    user_input = int(input())
-    if user_input == 1:
-      print("Enter the bill's ID, total, month, year, status,type,your username || all seperated by /: ")
-      clas_input = str(input())
-      cls1 = clas_input.split("/")
-      cls2 = FaturaMujore(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6])
-      db.appendObjectInto("Product Bill",cls2)
-      print("Bill added!")
-
-      
-    
-
-    
-    
-
-
-
-
-
-
 
 
 
@@ -98,8 +69,7 @@ class ManageBills():
 
 class RandomBill(FaturaMujore):
   def __init__(self,ID,total,month,year,status,type_,username):
-    super().__init__(self,ID,total,month,year,status,type_)
-    self.username = username
+    super().__init__(ID,total,month,year,status,type_,username)
 #------------------Getters------------------#
   def getID(self):
     return self.ID
@@ -133,7 +103,8 @@ class RandomBill(FaturaMujore):
 
 
   def toString(self):
-    return "/".join([str(self.ID),str(self.total),str(self.month),str(self.year),str(self.status),self.type_,self.username])
+    return "/".join([str(self.ID),str(self.total),str(self.month),str(self.year),str(self.status),str(self.type_),str(self.username)])
+    
   @classmethod
   def fromstring(cls,line):
     tokens = line.split("/")
@@ -149,8 +120,8 @@ class RandomBill(FaturaMujore):
 
 
 class GasBill(RandomBill):
-  def __init__(self,ID,total,month,year,status,type_,gastype,username):
-    super().__init__(self,ID,total,month,year,status,type_,username)
+  def __init__(self,ID,total,month,year,status,type_,username,gastype):
+    super().__init__(ID,total,month,year,status,type_,username)
     self.gastype=gastype
 
 #------------------Getters------------------#
@@ -189,11 +160,11 @@ class GasBill(RandomBill):
     self.username = username
 
   def toString(self):
-    return "/".join([str(self.ID),str(self.total),str(self.month),str(self.year),str(self.status),self.type_,self.username])
+    return "/".join([str(self.ID),str(self.total),str(self.month),str(self.year),str(self.status),str(self.type_),str(self.username),str(self.gastype)])
   @classmethod
   def fromstring(cls,line):
     tokens = line.split("/")
-    return cls(tokens[0],tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6])
+    return cls(tokens[0],tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6],tokens[7])
 
 
 
@@ -206,8 +177,8 @@ class GasBill(RandomBill):
 
 
 class ProductBill(RandomBill):
-  def __init__(self,ID,total,month,year,status,type_,producttypes,username):
-    super().__init__(self,ID,total,month,year,status,type_,username)
+  def __init__(self,ID,total,month,year,status,type_,username,producttypes):
+    super().__init__(ID,total,month,year,status,type_,username)
     self.producttype=producttypes
 
   #------------------Getters------------------#
@@ -248,10 +219,72 @@ class ProductBill(RandomBill):
 
   def toString(self):
     #format from objects to string to save in table
-    string = str(self.ID) + "/" + str(self.total) + "/" + str(self.month) +  "/" + str(self.year) + "/" + str(self.status) + "/" + str(self.type_) + "/"+ str(self.producttype)
+    string = str(self.ID) + "/" + str(self.total) + "/" + str(self.month) +  "/" + str(self.year) + "/" + str(self.status) + "/" + str(self.type_) + "/"+ str(self.username) + "/" + str(self.producttype) 
     return string
 
   @classmethod
   def fromstring(cls,y):
     objects =  y.split("/")
-    return cls(objects[0],objects[1],objects[2],objects[3],objects[4],objects[5],objects[6])
+    return cls(objects[0],objects[1],objects[2],objects[3],objects[4],objects[5],objects[6],objects[7])
+
+
+
+
+
+#21/2134/4/2020/paid/FaturaMujore/MathiasD
+#21/2134/4/2020/paid/RandomBill/MathiasD
+#21/2134/4/2020/paid/GasBill/MathiasD/Nafte
+#21/2134/4/2020/paid/ProductBill/MathiasD/Patate
+
+class ManageBills():
+  @staticmethod
+  def createBill(db):
+    #dict = {1:FaturaMujore, 2:RandomBill}
+    print("Press 1 to add Monthly Bill")
+    print("Press 2 to add Random Bill")
+    print("Press 3 to add Gas Bill")
+    print("Press 4 to add Product Bill")
+    user_input = int(input())
+    if user_input == 1:
+      print("Enter the bill's ID, total, month, year, status,type,your username || all seperated by /: ")
+      clas_input = str(input())
+      cls1 = clas_input.split("/")
+      cls2 = FaturaMujore(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6])
+      db.appendObjectInto("Fatura Mujore",cls2)
+      print("Bill added!")
+    elif user_input == 2:
+      print("Enter the bill's ID, total, month, year, status,type,your username || all seperated by /: ")
+      clas_input = str(input())
+      cls1 = clas_input.split("/")
+      cls2 = RandomBill(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6])
+      db.appendObjectInto("Random Bill",cls2)
+      print("Bill added!")
+    
+    elif user_input == 3:
+      print("Enter the bill's ID, total, month, year, status,type,gas type and your username || all seperated by /: ")
+      clas_input = str(input())
+      cls1 = clas_input.split("/")
+      cls2 = GasBill(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6],cls1[7])
+      db.appendObjectInto("Gas Bill",cls2)
+      print("Bill added!")
+
+    elif user_input == 4:
+      print("Enter the bill's ID, total, month, year, status,type,products type andyour username || all seperated by /: ")
+      clas_input = str(input())
+      cls1 = clas_input.split("/")
+      cls2 = ProductBill(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6],cls1[7])
+      db.appendObjectInto("Product Bill",cls2)
+      print("Bill added!")
+    
+    else:
+      pass
+  
+
+  @staticmethod
+  def filerBill(db):
+    pass
+  
+
+  def deleteBill(db):
+    pass
+

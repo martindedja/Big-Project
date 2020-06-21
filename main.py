@@ -44,18 +44,21 @@ def main():
       #manage bills
       #manage Account
       #reports
-      
+      print("Press 1 to add bills:")
+      print("Press 2 to filer bills:")
+      print("Press 3 to delete bills:")
+      print("Press 4 to modify bills:")
+      choice = int(input())
       #if else  if else 
       #choice = input("Press 1: ")
-      #if(choice==1):
-      ManageBills.createBill(db)
-        # TODO MANAGE Bills
-      pass
-      #elif choice == 2:
-      pass
+      if(choice==1):
+        ManageBills.createBill(db)
+
+      elif choice == 2:
+        ManageBills.filerBill(db)
         #ManageAccount
-      #elif choice == 3:
-      pass
+      elif choice == 3:
+        Manage.deleteBill(db)
         #Reports
 
       #else:

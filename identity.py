@@ -89,7 +89,7 @@ class Accounts():
   @staticmethod
   def deleteAcc(db):
     username = input("Enter account's username: ")
-    password = input("Enter password to confirm deletion: ")
+    password = getpass.getpass("Enter password to confirm deletion: ")
     if (len(db.getObjectsFrom("Accounts", lambda x:x.username == username)) == 1):
       object1 = db.getObjectsFrom("Accounts",lambda x: x.username == username)
       if (object1[0].password == password):
@@ -101,7 +101,7 @@ class Accounts():
   @staticmethod
   def modifyAcc(db):
     username = input("Enter your account's username: ")
-    password = input("Enter your account's password: ")
+    password = getpass.getpass("Enter your account's password: ")
     if (len(db.getObjectsFrom("Accounts", lambda x:x.username == username)) != 0):
       old_account = db.getObjectsFrom("Accounts",lambda x: x.username == username)
       if (old_account[0].password == password):
