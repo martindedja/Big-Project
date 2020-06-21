@@ -2,6 +2,7 @@ from database import Database
 
 db = Database(dbname="database")
 
+global username
 class FaturaMujore:
   def __init__(self,ID,total,month,year,status,type_,username):
     self.ID= ID
@@ -273,7 +274,7 @@ class ManageBills():
     
     else:
       pass
-  
+
 
   @staticmethod
   def filerBill(db):
@@ -287,7 +288,10 @@ class ManageBills():
       print("Press 3 for Product Bill: ")
       user_input2 = int(input())
       if user_input2 == 1:
-        pass
+        returned_bills = db.getObjectsFrom("All Bills", lambda x: type(x) == FaturaMujore)
+        for bill in returned_bills:
+          print(bill.username, bill.type_)
+        
       elif user_input2 == 2:
         pass
       elif user_input2 == 3:
@@ -311,3 +315,11 @@ class ManageBills():
   @staticmethod
   def showmybills(db):
     pass
+
+
+class FindMonthlyTotal:
+  @staticmethod
+  def findTotal(self,username):
+
+    a =db.getObjectsFrom("All Bills",lambda x : x.username == "MathiasD")
+    print(a[0])

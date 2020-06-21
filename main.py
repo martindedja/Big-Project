@@ -54,6 +54,8 @@ def main():
       #manage bills
       #manage Account
       #reports
+      FindMonthlyTotal.findTotal(self,MathiasD)
+      '''
       print("Press 1 to add bills:")
       print("Press 2 to filer bills:")
       print("Press 3 to delete bills:")
@@ -86,3 +88,4 @@ def main():
   
 if __name__ == '__main__':
   main()
+'''
