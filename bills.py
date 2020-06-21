@@ -246,14 +246,14 @@ class ManageBills():
       clas_input = str(input())
       cls1 = clas_input.split("/")
       cls2 = FaturaMujore(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6])
-      db.appendObjectInto("All Bills",cls2)
+      db.appendObjectInto("Monthly Bill",cls2)
       print("Bill added!")
     elif user_input == 2:
       print("Enter the bill's ID, total, month, year, status,type,your username || all seperated by /: ")
       clas_input = str(input())
       cls1 = clas_input.split("/")
       cls2 = RandomBill(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6])
-      db.appendObjectInto("All Bills",cls2)
+      db.appendObjectInto("Random Bill",cls2)
       print("Bill added!")
     
     elif user_input == 3:
@@ -261,7 +261,7 @@ class ManageBills():
       clas_input = str(input())
       cls1 = clas_input.split("/")
       cls2 = GasBill(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6],cls1[7])
-      db.appendObjectInto("All Bills",cls2)
+      db.appendObjectInto("Gas Bill",cls2)
       print("Bill added!")
 
     elif user_input == 4:
@@ -269,7 +269,7 @@ class ManageBills():
       clas_input = str(input())
       cls1 = clas_input.split("/")
       cls2 = ProductBill(cls1[0],cls1[1],cls1[2],cls1[3],cls1[4],cls1[5],cls1[6],cls1[7])
-      db.appendObjectInto("All Bills",cls2)
+      db.appendObjectInto("Product Bill",cls2)
       print("Bill added!")
     
     else:
@@ -288,7 +288,7 @@ class ManageBills():
       print("Press 3 for Product Bill: ")
       user_input2 = int(input())
       if user_input2 == 1:
-        returned_bills = db.getObjectsFrom("All Bills", lambda x: type(x) == FaturaMujore)
+        returned_bills = db.getObjectsFrom("Monthly Bill", lambda x: type(x) == FaturaMujore)
         for bill in returned_bills:
           print(bill.username, bill.type_)
         
@@ -321,5 +321,5 @@ class FindMonthlyTotal:
   @staticmethod
   def findTotal(self,username):
 
-    a =db.getObjectsFrom("All Bills",lambda x : x.username == "MathiasD")
+    a =db.getObjectsFrom("Monthly Bill",lambda x : x.username == "MathiasD")
     print(a[0])
