@@ -6,6 +6,17 @@ from SpecialFunctions import *
 #Grupi 4 esht jet
 
 
+
+
+def startSession(db,User):
+  # all functionalities here
+  # main menu 
+  #TODO
+
+  pass
+
+
+
 def main():
   print("          (         )            (               ")
   print(" (        )\ )   ( /(            )\ )         )  ")
