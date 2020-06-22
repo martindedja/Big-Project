@@ -59,21 +59,25 @@ class Login():
   def __init__(self, username, password):
     self.username = username
     self.password = password
-  
-  @classmethod
-  def fromstring(cls,y):
-    objects =  y.split("/")
-    return cls(objects[0],objects[1],objects[2],objects[3],objects[4],objects[5])
 
   @staticmethod
   def CheckCredentials(db):
     username = input("Username: ")
+
     object = db.getObjectsFrom("Accounts",lambda x: x.username == username)
     password = getpass.getpass("Password: ")
     if object[0].password == password:
       print("Success")
+      user = username
     else:
       print("Wrong credentials")
+  @staticmethod
+  def Logout(username, user):
+    if username == user:
+      user == None
+    else:
+      print("You are not logged in yet!")
+  
 #MathiasD/mathias.dariu@gmail.com/2341/MathiasDariu/069321433215/18  
 
 
