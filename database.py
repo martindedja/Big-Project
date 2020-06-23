@@ -29,7 +29,8 @@ class Database:
         with (open(table.getpath(),"r")) as fp:
             records = []
             # read all lines
-            lines = fp.readlines()
+            data = fp.read()
+            lines = data.split("\n")
             for line in lines:
                 # construct the object by the specific function
                 record = table.toObject(line)
@@ -60,7 +61,8 @@ class Database:
         # read all records
         with (open(table.getpath(),"r")) as fp:
             # read all lines of data one line for one object
-            lines = fp.readlines()
+            data = fp.read()
+            lines = data.split("\n")            
             fp.close()
         # write onnly those that do not fullfill the condition
         with(open(table.getpath(),"w") )as fp:
