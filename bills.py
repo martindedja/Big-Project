@@ -1,6 +1,6 @@
 from database import Database
 db = Database(dbname="database")
-global username
+
 class AllBills:
   def __init__(self,ID,total,date,month,year,status,type_,product_name,username):
     self.ID= ID
@@ -45,7 +45,7 @@ class AllBills:
     return self.type_
   def getproduct_name(self):
     return self.product_name
-  def getUsername(self):
+  def getusername(self):
     return self.username
 #------------------Setters------------------#
   def setID(self, ID):
@@ -64,7 +64,7 @@ class AllBills:
     self.type_ = type_
   def setproduct_name(self,product_name):
     self.product_name = product_name
-  def setUsername(self, username):
+  def setusername(self, username):
     self.username = username
 
 #21/2134/4/2020/paid/FaturaMujore/MathiasD
@@ -76,27 +76,29 @@ class ManageBills():
   @staticmethod
   def createBill(db):
     #dict = {1:FaturaMujore, 2:RandomBill}
-    print("Enter the bill's ID, total, date,month, year, status,type,your username || all seperated by /: ")
+    print("Enter the bill's ID, total, date,month, year, status,type,product name,your username|| all seperated by /: ")
     keep_going=True
     while keep_going==True:
       try:
         clas_input = str(input())
         cls1 = clas_input.split("/")
-        if cls1[2]>31 or cls1<1:
+        if int(cls1[2])>31 or int(cls1[2])<1:
           print("Check the date.")
           continue
-        elif cls1[3]<1 or cls1[3]>12:
+        elif int(cls1[3])<1 or int(cls1[3])>12:
           print("Check the month.")
           continue
-        elif len(list(cls1[4]))!=4:
-          print("Check the year.")
+        elif int(cls1[4])<2000:
+          print("Check the year:")
           continue
         else:
           cls2 = AllBills(cls1[0],cls1[1],cls1[2],cls1[3], cls1[4],cls1[5],cls1[6],cls1[7],cls1[8])
           db.appendObjectInto("All Bills",cls2)
           print("Bill added!")
           keep_going=False
+          
       except Exception:
+        print("Exception")
         pass
 
   @staticmethod
@@ -104,17 +106,17 @@ class ManageBills():
     returned_list = [ ]
     for bill in list1:
       infos = bill.toString().split("/")
-      if min_year == infos[4]:
-        if min_month == infos[3]:
-          if min_day > infos[2]:
+      if min_year == int(infos[4]):
+        if min_month == int(infos[3]):
+          if int(min_day) > int(infos[2]):
             pass
           else:
             returned_list.append(bill)
-        elif min_month > infos[3]:
+        elif int(min_month) > int(infos[3]):
           pass
         else:
           returned_list.append(bill)
-      elif min_year > infos[2]:
+      elif int(min_year) > int(infos[4]):
         pass
       else:
         returned_list.append(bill)
@@ -126,17 +128,17 @@ class ManageBills():
     returned_list = [ ]
     for bill in list1:
       infos = bill.toString().split("/")
-      if max_year == infos[4]:
-        if max_month == infos[3]:
-          if max_day < infos[2]:
+      if max_year == int(infos[4]):
+        if max_month == int(infos[3]):
+          if int(max_day) < int(infos[2]):
             pass
           else:
             returned_list.append(bill)
-        elif max_month < infos[3]:
+        elif int(max_month) < int(infos[3]):
           pass
         else:
           returned_list.append(bill)
-      elif max_year < infos[4]:
+      elif int(max_year) < int(infos[4]):
         pass
       else:
         returned_list.append(bill)
@@ -162,10 +164,10 @@ class ManageBills():
       pass
     
     elif user_input == 2:
-      min_deadline = input("Enter date in dd/mm/yyyy format: ").split("/")
-      max_deadline = input("Enter date in dd/mm/yyyy format: ").split("/")
-      min_day,min_month,min_year = min_deadline[0], min_deadline[1], min_deadline[2]
-      max_day,max_month,max_year = max_deadline[0], max_deadline[1], max_deadline[2]
+      min_deadline = input("Start date dd/mm/yyyy format: ").split("/")
+      max_deadline = input("End date  dd/mm/yyyy format: ").split("/")
+      min_day,min_month,min_year = int(min_deadline[0]), int(min_deadline[1]), int(min_deadline[2])
+      max_day,max_month,max_year = int(max_deadline[0]), int(max_deadline[1]), int(max_deadline[2])
 
       list1 = db.getObjectsFrom("All Bills", lambda x:True)
       min_date_checked_bills = ManageBills.check_smaller_date(list1, min_day,min_month,min_year)
@@ -197,18 +199,16 @@ class ManageBills():
 
   @staticmethod
   def showmybills(db):
-    usn=input("Username:")
-    if len(db.getObjectsFrom("All Bills",lambda x: x.username==usn))>=1:
-      bills1=db.getObjectsFrom("All Bills",lambda x: x.username==usn)
-      for bill in bills1:
-        print(bill.username ,"\n")
-      if len(db.getObjectsFrom("All Bills",lambda x:True))==0:
-        print("You do not have any bills registered")
-      else:
-        print("Error Occured! Please try again!")
-
+    user_input = input("enter username: ")
+    if len(db.getObjectsFrom("All Bills", lambda x : x.username == user_input))!=0:
+      a = (len(db.getObjectsFrom("All Bills", lambda x : x.username == user_input)))
+      print(a)
+      
+      
+            
 class FindMonthlyTotal:
   @staticmethod
-  def findTotal(db,username):# mos duhet db dhe jo self ktu?
-    a =db.getObjectsFrom("Monthly Bill",lambda x : x.username == "MathiasD")
+  def findTotal(db,username):
+    a =db.getObjectsFrom("All Bills",lambda x : 
+    x.username == username)
     print(a[0])

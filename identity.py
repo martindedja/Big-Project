@@ -2,13 +2,24 @@
 #DONE AND WORKING
 from database import Database
 import getpass
-db = Database(dbname="database")
-
+'''
+import smtplib, ssl
+import email.utils
+def sendemail(receiver,content):
+  port = 465  # For SSL
+  smtp_server = "smtp.gmail.com"
+  sender_email = "group4python@gmail.com"  
+  password =("mihallaris")
+  context = ssl.create_default_context()
+  with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+      server.login(sender_email, password)
+      server.sendmail(sender_email, receiver, content)
+'''
 class Account:
 
   
-  def __init__(self,Username,Email,Password,FullName,PhoneNumber,Age):
-    self.username = Username
+  def __init__(self,username,Email,Password,FullName,PhoneNumber,Age):
+    self.username = username
     self.email = Email
     self.password = Password
     self.full_name = FullName
@@ -27,7 +38,7 @@ class Account:
   
 
 #------------------Getters------------------#
-  def getUsername(self):
+  def getusername(self):
     return self.username
   def getEmail(self):
     return self.email
@@ -39,9 +50,9 @@ class Account:
     return self.phone_no
   def getAge(self):
     return self.age
-  
+
 #------------------Setters------------------#
-  def setUsername(self,username):
+  def setusername(self,username):
     self.username = username
   def setEmail(self, email):
     self.email = email
@@ -56,27 +67,17 @@ class Account:
 
 
 class Login():
-  def __init__(self, username, password):
-    self.username = username
-    self.password = password
-
   @staticmethod
   def CheckCredentials(db):
     username = input("Username: ")
-
     object = db.getObjectsFrom("Accounts",lambda x: x.username == username)
     password = getpass.getpass("Password: ")
     if object[0].password == password:
       print("Success")
-      user = username
+      return username
     else:
       print("Wrong credentials")
-  @staticmethod
-  def Logout(username, user):
-    if username == user:
-      user == None
-    else:
-      print("You are not logged in yet!")
+      return None
   
 #MathiasD/mathias.dariu@gmail.com/2341/MathiasDariu/069321433215/18  
 
@@ -84,11 +85,15 @@ class Login():
 class Accounts():
   @staticmethod
   def createAcc(db):
+    
     print("Enter the account's username, email, password, fullname, phone no and age, all divided by /: ")
     class_input = str(input())
     cl1 = class_input.split("/")
     cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],int(cl1[5]))
     db.appendObjectInto("Accounts",cl2)
+    #sendemail(str(cl1[1]),"Subject: Welcome to #KesmetGroup.\
+    #Glad we have you, enjoy your time using our app.")
+
 
   @staticmethod
   def deleteAcc(db):

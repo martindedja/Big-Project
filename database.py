@@ -34,8 +34,7 @@ class Database:
                 # construct the object by the specific function
                 record = table.toObject(line)
                 # if object fullfill the condition then add into list
-                print("testing",condition(record))
-                if( condition(record)):
+                if(condition(record)):
                     records.append(record)
             # close the file and then return the ist of selected objects
             fp.close()

@@ -3,17 +3,47 @@ from bills import *
 from identity import Account,Accounts,Login
 from reports import *
 from SpecialFunctions import *
-#Grupi 4 esht jet
+#Grupi 4 esht jet <3
 
 
 
 
 def startSession(db,User):
-  # all functionalities here
-  # main menu 
-  #TODO
+  while(True):
+  #ManageBills.createBill(db)
+  # menuja kryesore 
+    #manage bills
+    #manage Account
+    #reports
+    #FindMonthlyTotal.findTotal(self,MathiasD)
+    print("Press 1 to add bills:")
+    print("Press 2 to filer bills:")
+    print("Press 3 to delete bills:")
+    print("Press 4 to modify bills:")
+    print("Press 5 to show all your bills: ")
+    print("Press 0 to log out:")
+    
+    choice = int(input())
 
-  pass
+    if(choice==1):
+      ManageBills.createBill(db)
+
+    elif (choice == 2):
+      ManageBills.filterBill(db)
+      
+    elif (choice == 3):
+      ManageBills.deleteBill(db)
+
+    elif (choice == 0):
+      return
+    
+    elif (choice == 4):
+      pass
+      
+    elif (choice == 5):
+      ManageBills.showmybills(db)
+    else:
+      continue
 
 
 
@@ -42,55 +72,24 @@ def main():
     if len(all_accounts) == 0:
       print("Register the account: ")
       Accounts.createAcc(db)
-      print("Press 1 for login, 2 to register and 3 for logout.")
-      a=int(input())     
-      if a==1:
-        Login.CheckCredentials(db)
-      elif a==2:
-        Accounts.createAcc(db)
-      elif a==3:
-        #logout
-        pass
+    print("Press 1 for Login\nPress 2 to register\nPress 3 for exiting\nPress 4 to change your password")
+    a=int(input())     
+    if a==1:
+      user=Login.CheckCredentials(db)
+      if user==None:
+        continue  
       else:
-        continue
+         startSession(db,user)
+    elif a==2:
+      Accounts.createAcc(db)
+    elif a==3:
+      return
+      
+    else:
+      continue
 
     
-    while(True):
-      #ManageBills.createBill(db)
-      # menuja kryesore 
-      #manage bills
-      #manage Account
-      #reports
-      #FindMonthlyTotal.findTotal(self,MathiasD)
-
-      print("Press 1 to add bills:")
-      print("Press 2 to filer bills:")
-      print("Press 3 to delete bills:")
-      print("Press 4 to modify bills:")
-      print("Press 5 to show all your bills: ")
-      print("Press 0 to log out:")
-      
-      choice = int(input())
-
-      if(choice==1):
-        ManageBills.createBill(db)
-
-      elif (choice == 2):
-        ManageBills.filterBill(db)
-        
-      elif (choice == 3):
-        ManageBills.deleteBill(db)
-
-      elif (choice == 0):
-        break
-      
-      elif (choice == 4):
-        pass
-        
-      elif (choice == 5):
-        ManageBills.showmybills(db)
-      else:
-        continue
+   
 
 
 
