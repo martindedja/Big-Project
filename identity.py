@@ -89,7 +89,10 @@ class Accounts():
     print("Enter the account's username, email, password, fullname, phone no and age, all divided by /: ")
     class_input = str(input())
     cl1 = class_input.split("/")
+    # check first if all data is correctly entered by the user 
+    # TODO 
     cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],int(cl1[5]))
+    # Validate object
     db.appendObjectInto("Accounts",cl2)
     #sendemail(str(cl1[1]),"Subject: Welcome to #KesmetGroup.\
     #Glad we have you, enjoy your time using our app.")
