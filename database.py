@@ -29,14 +29,18 @@ class Database:
         with (open(table.getpath(),"r")) as fp:
             records = []
             # read all lines
-            data = fp.read()
-            lines = data.split("\n")
+            lines = fp.readlines()
             for line in lines:
                 # construct the object by the specific function
-                record = table.toObject(line)
-                # if object fullfill the condition then add into list
-                if(condition(record)):
-                    records.append(record)
+                try:
+                  line = line.split("\n")[0]
+                  print(line)
+                  record = table.toObject(line)
+                  # if object fullfill the condition then add into list
+                  if(condition(record)):
+                      records.append(record)
+                except:
+                  print("error parsing ",line)
             # close the file and then return the ist of selected objects
             fp.close()
             return records
@@ -61,8 +65,7 @@ class Database:
         # read all records
         with (open(table.getpath(),"r")) as fp:
             # read all lines of data one line for one object
-            data = fp.read()
-            lines = data.split("\n")            
+            lines = fp.readlines()         
             fp.close()
         # write onnly those that do not fullfill the condition
         with(open(table.getpath(),"w") )as fp:
@@ -70,9 +73,13 @@ class Database:
             for line in lines:
                 # construct the apropriate object using the
                 # function toObject of the respective table
-                record = table.toObject(line)
-                if(not condition(record)):
+                try:
+                  line = line.split("\n")[0]
+                  record = table.toObject(line)
+                  if(not condition(record)):
                     fp.write(line)
+                except:
+                  print("error writing line")
             fp.close()
         return(101,"file not found")
     # this function writes objects in a file but the

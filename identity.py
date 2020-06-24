@@ -91,7 +91,7 @@ class Accounts():
     cl1 = class_input.split("/")
     # check first if all data is correctly entered by the user 
     # TODO 
-    cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],int(cl1[5]))
+    cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],int(cl1[5].split("\n")[0]))
     # Validate object
     db.appendObjectInto("Accounts",cl2)
     #sendemail(str(cl1[1]),"Subject: Welcome to #KesmetGroup.\
