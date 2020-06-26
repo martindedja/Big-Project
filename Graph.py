@@ -1,55 +1,56 @@
 import matplotlib.pyplot as plt 
 from database import Database
-db = Database(dbname="database")
-x=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-#### ne vend to 123456789101112 ne dictionary vendosen totalet per cdo muaj.
-one=db.getObjectsFrom("All Bills",lambda a:True)
+def CreateGraph(db,username):
 
-jan=[]
-feb=[]
-mar=[]
-apr=[]
-may=[]
-jun=[]
-jul=[]
-aug=[]
-sep=[]
-oct=[]
-nov=[]
-dec=[]
-for i in range (len(one)):
-  if one[i][2]==1:
-    jan.append(one[i][1])
-  elif one[i][2]==2:
-    feb.append(one[i][1])
-  elif one[i][2]==3:
-    mar.append(one[i][1])
-  elif one[i][2]==4:
-    apr.append(one[i][1])
-  elif one[i][2]==5:
-    may.append(one[i][1])
-  elif one[i][2]==6:
-    jun.append(one[i][1])
-  elif one[i][2]==7:
-    jul.append(one[i][1])
-  elif one[i][2]==8:
-    aug.append(one[i][1])
-  elif one[i][2]==9:
-    sep.append(one[i][1])
-  elif one[i][2]==10:
-    oct.append(one[i][1])
-  elif one[i][2]==11:
-    nov.append(one[i][1])
-  elif one[i][2]==12:
-    dec.append(one[i][1])
-  else:
-    print("You can't perform this action. No bills registered.")
-
-
-exp={"total_jan":sum(jan),"total_feb":sum(feb),"total_mar":sum(mar), "total_apr":sum(apr), "total_may":sum(may),"total_jun":sum(jun),"total_jul":sum(jul),"total_aug":sum(aug),"total_sep":sum(sep),"total_oct":sum(oct),"total_nov":sum(nov),"total_dec":sum(dec)}
-y = [exp["total_jan"],exp["total_feb"],exp["total_mar"],exp["total_apr"],exp["total_may"],exp["total_jun"],exp["total_jul"],exp["total_aug"],exp["total_sep"],exp["total_oct"],exp["total_nov"],exp["total_dec"]]
-plt.plot(x, y) 
-plt.xlabel('') 
-plt.ylabel('') 
-plt.title('Your expenses accross the months.') 
-plt.show(block=False) 
+  x=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+  ones=db.getObjectsFrom("All Bills",lambda a:a.username==username)
+  year = int(input("Enter the year you are looking for: "))
+  
+  jan=[]
+  feb=[]
+  mar=[]
+  apr=[]
+  may=[]
+  jun=[]
+  jul=[]
+  aug=[]
+  sep=[]
+  oct=[]
+  nov=[]
+  dec=[]
+  for bill in ones:
+    
+    if int(bill.month)==1 and year == int(bill.year):
+      jan.append(int(bill.total))
+    elif int(bill.month)==2 and year == int(bill.year):
+      feb.append(int(bill.total))
+    elif int(bill.month)==3 and year == int(bill.year):
+      mar.append(int(bill.total))
+    elif int(bill.month)==4 and year == int(bill.year):
+      apr.append(int(bill.total))
+    elif int(bill.month)==5 and year == int(bill.year):
+      may.append(int(bill.total))
+    elif int(bill.month)==6 and year == int(bill.year):
+      jun.append(int(bill.total))
+    elif int(bill.month)==7 and year == int(bill.year):
+      jul.append(int(bill.total))
+    elif int(bill.month)==8 and year == int(bill.year):
+      aug.append(int(bill.total))
+    elif int(bill.month)==9 and year == int(bill.year):
+      sep.append(int(bill.total))
+    elif int(bill.month)==10 and year == int(bill.year):
+      oct.append(int(bill.total))
+    elif int(bill.month)==11 and year == int(bill.year):
+      nov.append(int(bill.total))
+    elif int(bill.month)==12 and year == int(bill.year):
+      dec.append(int(bill.total))
+    else:
+      pass
+  y=[sum(jan),sum(feb),sum(mar),sum(apr), sum(may),sum(jun),sum(jul),sum(aug),sum(sep),sum(oct),sum(nov),sum(dec)]
+  plt.plot(x, y) 
+  plt.xlabel('') 
+  plt.ylabel('') 
+  plt.title('Your expenses accross the months.')
+  plt.show(block=False) 
+def paying():
+  print("\nHere are some sites that can help you gather further information to pay bills from certain sources:\n\nWater and Electricity -> https://www.easypay.al/sherbimet/utilitetet/fatura-dritave-dhe-ujit/ \n\nDigitalb -> https://www.digitalb.al/ndihma/dyqanet-2/ \n\nTring -> https://www.tring.al/familjare/tring-shop/dyqanet-tring/ \n\nVodafone -> https://www.vodafone.al/store-locator/ \n\nFrom the Government -> https://e-albania.al/eAlbaniaServices/Packages.aspx?lvl=2&path_code=1118&cat_id=1118\n\nTelekom ->  https://www.telekom.com.al/dyqane/ \n\nWestern Union,mainly for sending money -> https://www.westernunion.com/al/en/send-money.html\n\n A list of banks in Albania -> https://sq.wikipedia.org/wiki/Lista_e_bankave_n%C3%AB_Shqip%C3%ABri \n")

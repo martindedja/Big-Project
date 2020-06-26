@@ -1,6 +1,5 @@
-#accounts and login
-#DONE AND WORKING
 from database import Database
+from bills import ManageBills
 import getpass
 '''
 import smtplib, ssl
@@ -35,7 +34,6 @@ class Account:
   def fromstring(cls,y):
     objects =  y.split("/")
     return cls(objects[0],objects[1],objects[2],objects[3],objects[4],objects[5])
-  
 
 #------------------Getters------------------#
   def getusername(self):
@@ -72,12 +70,15 @@ class Login():
     username = input("Username: ")
     object = db.getObjectsFrom("Accounts",lambda x: x.username == username)
     password = getpass.getpass("Password: ")
-    if object[0].password == password:
-      print("Success")
-      return username
+    if len(object) !=0:
+      if object[0].password == password:
+        print("Success")
+        return username
+      else:
+        print("Wrong credentials")
+        return None
     else:
-      print("Wrong credentials")
-      return None
+      print("Username does not exist")
   
 #MathiasD/mathias.dariu@gmail.com/2341/MathiasDariu/069321433215/18  
 
@@ -85,22 +86,21 @@ class Login():
 class Accounts():
   @staticmethod
   def createAcc(db):
-    
     print("Enter the account's username, email, password, fullname, phone no and age, all divided by /: ")
-    class_input = str(input())
+    class_input = input()
     cl1 = class_input.split("/")
-    # check first if all data is correctly entered by the user 
-    # TODO 
-    cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],int(cl1[5].split("\n")[0]))
-    # Validate object
-    db.appendObjectInto("Accounts",cl2)
+    if len(cl1) == 6 and cl1[5].isdigit():
+      cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],int(cl1[5]))
+      db.appendObjectInto("Accounts",cl2)
+    else:
+      print("Not a valid accout!")
     #sendemail(str(cl1[1]),"Subject: Welcome to #KesmetGroup.\
     #Glad we have you, enjoy your time using our app.")
 
 
   @staticmethod
   def deleteAcc(db):
-    username = input("Enter account's username: ")
+    username = input("Enter account's username again : ")
     password = getpass.getpass("Enter password to confirm deletion: ")
     if (len(db.getObjectsFrom("Accounts", lambda x:x.username == username)) == 1):
       object1 = db.getObjectsFrom("Accounts",lambda x: x.username == username)
@@ -124,3 +124,30 @@ class Accounts():
         db.overwriteObjectsInto("Accounts", all_accounts)
     else:
       print("Username does not exist!")
+
+  @staticmethod
+  def changePassword(db):
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+    a = (db.getObjectsFrom("Accounts", lambda x : x.username == username and x.password==password))
+    if len(a)!=0:
+      print("Press 1 to change password or press 2 to go to the main menu.")
+      choice=input(">")
+      if choice.isdigit():
+        choice = int(choice)
+      else:
+        print("Not a valid input!")
+
+      if choice==2:
+        pass
+      elif choice==1:
+        new_password=str(input("Please enter the new password:"))
+        ap=db.getObjectsFrom("Accounts", lambda x : x.username == username and x.password==password)
+        ap[0].setPassword(new_password)
+       
+        w=db.getObjectsFrom("Accounts",lambda x:x.username==username and x.password!=password)
+        w.append(ap[0])
+        db.overwriteObjectsInto("Accounts", w)
+        print("\nPassword Changed Successfully\n")       
+    else:
+      print("\nError\n")

@@ -34,7 +34,7 @@ class Database:
                 # construct the object by the specific function
                 try:
                   line = line.split("\n")[0]
-                  print(line)
+                  
                   record = table.toObject(line)
                   # if object fullfill the condition then add into list
                   if(condition(record)):
@@ -77,7 +77,7 @@ class Database:
                   line = line.split("\n")[0]
                   record = table.toObject(line)
                   if(not condition(record)):
-                    fp.write(line)
+                    fp.write(line+"\n")
                 except:
                   print("error writing line")
             fp.close()
