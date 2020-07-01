@@ -1,11 +1,9 @@
 import matplotlib.pyplot as plt 
 from database import Database
 def CreateGraph(db,username):
-
-  x=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-  ones=db.getObjectsFrom("All Bills",lambda a:a.username==username)
+  x=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  ones=db.getObjectsFrom("All Bills", lambda a: a.username == username)
   year = int(input("Enter the year you are looking for: "))
-  
   jan=[]
   feb=[]
   mar=[]
@@ -19,7 +17,6 @@ def CreateGraph(db,username):
   nov=[]
   dec=[]
   for bill in ones:
-    
     if int(bill.month)==1 and year == int(bill.year):
       jan.append(int(bill.total))
     elif int(bill.month)==2 and year == int(bill.year):
@@ -51,6 +48,6 @@ def CreateGraph(db,username):
   plt.xlabel('') 
   plt.ylabel('') 
   plt.title('Your expenses accross the months.')
-  plt.show(block=False) 
+  plt.show(block=False)
 def paying():
-  print("\nHere are some sites that can help you gather further information to pay bills from certain sources:\n\nWater and Electricity -> https://www.easypay.al/sherbimet/utilitetet/fatura-dritave-dhe-ujit/ \n\nDigitalb -> https://www.digitalb.al/ndihma/dyqanet-2/ \n\nTring -> https://www.tring.al/familjare/tring-shop/dyqanet-tring/ \n\nVodafone -> https://www.vodafone.al/store-locator/ \n\nFrom the Government -> https://e-albania.al/eAlbaniaServices/Packages.aspx?lvl=2&path_code=1118&cat_id=1118\n\nTelekom ->  https://www.telekom.com.al/dyqane/ \n\nWestern Union,mainly for sending money -> https://www.westernunion.com/al/en/send-money.html\n\n A list of banks in Albania -> https://sq.wikipedia.org/wiki/Lista_e_bankave_n%C3%AB_Shqip%C3%ABri \n")
+  print("\nHere are some sites that can help you gather further information to pay bills from certain sources:\n\nWater and Electricity -> https://www.easypay.al/sherbimet/utilitetet/fatura-dritave-dhe-ujit/ \n\nDigitalb -> https://www.digitalb.al/ndihma/dyqanet-2/ \n\nTring -> https://www.tring.al/familjare/tring-shop/dyqanet-tring/ \n\nVodafone -> https://www.vodafone.al/store-locator/ \n\nFrom the Government -> https://e-albania.al/eAlbaniaServices/Packages.aspx?lvl=2&path_code=1118&cat_id=1118\n\nTelekom ->  https://www.telekom.com.al/dyqane/ \n\nWestern Union,mainly for sending money -> https://www.westernunion.com/al/en/send-money.html\n\nA list of banks in Albania -> https://sq.wikipedia.org/wiki/Lista_e_bankave_n%C3%AB_Shqip%C3%ABri \n")
