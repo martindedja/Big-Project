@@ -74,23 +74,25 @@ class Accounts():
     fullname = input("Enter full name: ")
     phone_no = input("Enter phone number: ")
     age = input("Enter age: ")
+    if username or email or password or fullname or phone_no == "" or " ":
+	    class_input = "/".join([str(username), str(email), str(password), str(fullname), str(phone_no), str(age)])
+	    cl1 = class_input.split("/")
 
-    class_input = "/".join([str(username), str(email), str(password), str(fullname), str(phone_no), str(age)])
-    cl1 = class_input.split("/")
-
-    cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],int(cl1[5]))
-    max=0
-    for i in cl1[4]:
-      max+=1
-      if len(db.getObjectsFrom("Accounts",lambda x:x.username==cl1[0]))!=0:
-        print(Fore.BLACK)
-        print("Please enter a different username.")
-        print(Fore.RESET)
-      else:
-        db.appendObjectInto("Accounts",cl2)
-        print(Fore.GREEN)
-        print("Account created.")
-        print(Fore.RESET)
+	    cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],(cl1[5]))
+	    max=0
+	    for i in cl1[4]:
+	      max+=1
+	      if len(db.getObjectsFrom("Accounts",lambda x:x.username==cl1[0]))!=0:
+	        print(Fore.BLACK)
+	        print("Please enter a different username.")
+	        print(Fore.RESET)
+	      else:
+	        db.appendObjectInto("Accounts",cl2)
+	        print(Fore.GREEN)
+	        print("Account created.")
+	        print(Fore.RESET)
+    else:
+    	print("Input Error!")
   @staticmethod
   def deleteAcc(db,username):
     password = getpass.getpass("Enter password again to confirm deletion: ")
