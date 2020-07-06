@@ -9,6 +9,9 @@ from time import sleep
 #Grupi 4 esht jet <3
 import colorama
 from colorama import Fore
+from colorama import init
+
+init()
 def startSession(db,User):
   while(True):
     print("Press 1 to add bills.")

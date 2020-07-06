@@ -68,9 +68,16 @@ class Login():
 class Accounts():
   @staticmethod
   def createAcc(db):
-    print("Enter the account's username, email, password, fullname, phone no and age, all divided by /: ")
-    class_input = str(input())
+    username = input("Enter username: ")
+    email = input("Enter email: ")
+    password = input("Enter password: ")
+    fullname = input("Enter full name: ")
+    phone_no = input("Enter phone number: ")
+    age = input("Enter age: ")
+
+    class_input = "/".join([str(username), str(email), str(password), str(fullname), str(phone_no), str(age)])
     cl1 = class_input.split("/")
+
     cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],int(cl1[5]))
     max=0
     for i in cl1[4]:
@@ -79,10 +86,6 @@ class Accounts():
         print(Fore.BLACK)
         print("Please enter a different username.")
         print(Fore.RESET)
-        pass 
-      elif max!=10:
-        print("Please recheck your phone number. An Albanian phone number contains 10 digits.")
-        pass
       else:
         db.appendObjectInto("Accounts",cl2)
         print(Fore.GREEN)
