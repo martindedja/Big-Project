@@ -19,26 +19,8 @@ class AllBills:
   def fromstring(cls,line):
     tokens = line.split("/")
     return cls(tokens[0],tokens[1],tokens[2],tokens[3],tokens[4],tokens[5],tokens[6],tokens[7],tokens[8])
-  @staticmethod
-  def createclassBill(db,user):
-    print("Enter the bill's ID, total,date, month, year, status, type , product name all seperated by /: ")
-    class_input = str(input())
-    cl1 = class_input.split("/")
-    if len(cl1) == 8 and cl1[1].isdigit() and cl1[2] and cl1[3] and cl1[4]:
-      if cl1[5] == 'not_paid' or 'paid':
-        cl2 = AllBills(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],cl1[5],cl1[6],cl1[7],user)
-        db.appendObjectInto("All Bills",cl2)
-        print(Fore.GREEN)
-        print("Bill added")
-        print(Fore.RESET)
-      else:
-        print(Fore.RED)
-        print("Bill status error! write not_paid or paid!!")
-        print(Fore.RESET)
-    else:
-      print(Fore.RED)
-      print("Wrong bill structure")
-      print(Fore.RESET)
+
+#NOT USED PLACE
 #------------------Getters------------------#
   def getID(self):
     return self.ID 
@@ -85,11 +67,19 @@ class ManageBills():
   @staticmethod
   def createBill(db,user):
     #dict = {1:FaturaMujore, 2:RandomBill}
-    print("Enter the bill's ID, total, day,month, year, status,type,product name,your username|| all seperated by /: ")
+
     keep_going=True
     while keep_going==True:
-      try:
-        clas_input = str(input())
+      ID = input("Bill ID: ")
+      total = input("Bill Total: ")
+      day = input("Day: ")
+      month = input("Month: ")
+      year = input("Year: ")
+      status = input("Bill Status: ")
+      type_ = input("Bill Type: ")
+      productname = input("Product Name: ")
+      clas_input = "/".join([str(ID),str(total),str(day),str(month),str(year),str(status),str(type_),str(productname)])
+      try:      
         cls1 = clas_input.split("/")
         if int(cls1[2])>31 or int(cls1[2])<1:
           print(Fore.RED)
@@ -114,13 +104,10 @@ class ManageBills():
           print(Fore.RESET)
           keep_going=False          
       except Exception:
-        print(Fore.RED)
-        print("Error")
-        print(Fore.RESET)
         pass
   @staticmethod
   def check_smaller_date(list1,min_day,min_month,min_year):
-    returned_list = [ ]
+    returned_list = []
     for bill in list1:
       infos = bill.toString().split("/")
       if min_year == int(infos[4]):

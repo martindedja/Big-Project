@@ -4,13 +4,13 @@ from identity import *
 from report import Reports
 from Graph import *
 from report import *
+from clear_screen import *
 from clear_screen import clear
 from time import sleep 
 #Grupi 4 esht jet <3
 import colorama
 from colorama import Fore
 from colorama import init
-
 init()
 def startSession(db,User):
   while(True):
@@ -109,10 +109,10 @@ def main():
         user=Login.CheckCredentials(db)
         if user==None:
           continue
-          clear_screen.clear()  
+          clear()  
         else:
           startSession(db,user)
-          clear_screen.clear()  
+          clear()  
       elif a==2:
         Accounts.createAcc(db)
       elif a==3:
