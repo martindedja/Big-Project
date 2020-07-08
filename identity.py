@@ -231,7 +231,8 @@ class Accounts():
       print(Fore.RESET)
   @staticmethod
   def changePassword(db,username):
-    password = input("Enter password: ")
+
+    password = getpass.getpass("Enter password: ")
     a = (db.getObjectsFrom("Accounts", lambda x : x.username == username and x.password==password))
     if len(a)!=0:
       print("Press 1 to change password or press 2 to go to the main menu.")
@@ -239,13 +240,22 @@ class Accounts():
       if choice==2:
         pass
       elif choice==1:
-        new_password=str(input("Please enter the new password:"))
+        add = db.getObjectsFrom("Accounts",lambda x:x.username!= "" and x.password!="")
+        new_password=str(getpass.getpass("Please enter the new password:"))
         ap=db.getObjectsFrom("Accounts", lambda x : x.username == username and x.password==password)
         ap[0].setPassword(new_password)
+        
         w=db.getObjectsFrom("Accounts",lambda x:x.username==username and x.password!=password)
         w.append(ap[0])
         db.overwriteObjectsInto("Accounts", w)
-        print("\nPassword Changed Successfully\n")
+        w.append(ap[0])
+        for bill in add:
+          x = Account(bill.username,bill.email,bill.password,bill.full_name,bill.phone_no,bill.age) 
+          db.appendObjectInto("Accounts",x)
+        db.deleteObjectsFrom("Accounts",lambda x : x.username == username and x.password == password)
+        print(Fore.GREEN)
+        print("Password Changed Successfully")
+        print(Fore.RESET)
       else:
         print(Fore.RED)
         print("Unknown character value!")
