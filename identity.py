@@ -169,8 +169,20 @@ class Accounts():
     while keep3==True:
       try:
         age = int(input("Enter age: "))
+        if age>5:
+          if age<123:
+            keep3=False
+          else:
+            print(Fore.BLACK)
+            print("According to the WHO, the oldest person alive was 122 years old. Please input your real age.") 
+            print(Fore.RESET)
+            continue
+        else:
+          print(Fore.BLACK)
+          print("According to the WHO, children below the age of 6 can not maintain this sytem because of Childhood Amnesia.")
+          print(Fore.RESET)
+          continue
       except Exception: continue
-      else: keep3=False
     class_input = "/".join([str(username), str(email), str(password), str(fullname), str(phone_no), str(age)])
     cl1 = class_input.split("/")
     cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],int(cl1[5]))
