@@ -40,7 +40,7 @@ class Database:
                   if(condition(record)):
                       records.append(record)
                 except:
-                  print("error parsing ",line)
+                  print(line)
             # close the file and then return the ist of selected objects
             fp.close()
             return records

@@ -97,15 +97,30 @@ class Accounts():
         print(Fore.BLACK)
         print("Please recheck.")
         print(Fore.RESET)
+        continue 
+    keep5=True
+    while keep5==True:
+      try:
+        password = getpass.getpass("Enter password: ")
+        confirm=getpass.getpass("Please reenter the password:")
+        if password==confirm: keep5=False
+        else:
+          print(Fore.BLACK)
+          print("Please recheck.")
+          print(Fore.RESET)
+        continue
+      except Exception:
         continue
       
-    password = input("Enter password: ")
+
     fullname = input("Enter full name: ")
     keep4=True
     while keep4==True:
       try:
         phone_no = input("Enter phone number: ")  
         if len(phone_no)==10:
+          keep4=False
+        elif len(phone_no)==12:
           keep4=False
         else:
           print(Fore.BLACK)
@@ -171,7 +186,6 @@ class Accounts():
       print(Fore.RESET)
   @staticmethod
   def changePassword(db,username):
-
     password = input("Enter password: ")
     a = (db.getObjectsFrom("Accounts", lambda x : x.username == username and x.password==password))
     if len(a)!=0:
@@ -193,5 +207,5 @@ class Accounts():
         print(Fore.RESET)       
     else:
       print(Fore.RED)
-      print("\nError\n")
+      print("Error")
       print(Fore.RESET)
