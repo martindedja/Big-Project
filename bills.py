@@ -59,53 +59,131 @@ class AllBills:
     self.product_name = product_name
   def setusername(self, username):
     self.username = username
-#21/2134/4/2020/paid/FaturaMujore/MathiasD
-#21/2134/4/2020/paid/RandomBill/MathiasD
-#21/2134/4/2020/paid/GasBill/MathiasD/Nafte
-#21/2134/4/2020/paid/ProductBill/MathiasD/Patate
+
 class ManageBills():
   @staticmethod
-  def createBill(db,user):
-    #dict = {1:FaturaMujore, 2:RandomBill}
-
+  def createBill(db,username):
     keep_going=True
     while keep_going==True:
-      ID = input("Bill ID: ")
-      total = input("Bill Total: ")
-      day = input("Day: ")
-      month = input("Month: ")
-      year = input("Year: ")
-      status = input("Bill Status: ")
-      print("Bill types:\nGas Bill | Electricity Bill | Monthly Bill | Water Bill | Taxes | Other")
-      type_ = input("Bill Type: ")
+      try:
+        ID = input("Bill ID: ")
+        if len(db.getObjectsFrom("All Bills",lambda x: x.ID==ID and x.username==username))==0:
+          ID=int(ID)
+          if ID<1:
+            print(Fore.BLACK)
+            print("The ID can not be 0 or lower.")
+            print(Fore.RESET)
+            continue
+          else:
+            keep_going=False
+        elif len(db.getObjectsFrom("All Bills",lambda x: x.ID==ID and x.username==username))!=0:
+          print(Fore.BLACK)
+          print("There is another bill with this ID.")
+          print(Fore.RESET)
+          continue
+        else: 
+          continue
+      except Exception:
+        continue
+    keep10=True
+    while keep10==True:
+      try:
+        total = int(input("Bill Total: "))
+        if total<0:
+          print(Fore.BLACK)
+          print("The total can not be lower than 0.")
+          print(Fore.RESET)
+          continue
+        else: keep10=False
+      except Exception: 
+        continue
+    keep11=True
+    while keep11==True:
+      try:
+        day = int(input("Day: "))
+        if day>0 and day<32:
+          keep11=False
+        else:
+          print(Fore.BLACK)
+          print("Please recheck.")
+          print(Fore.RESET)
+          continue
+      except Exception: 
+        continue
+    keep12=True
+    while keep12==True:
+      try:
+        month = int(input("Month: "))
+        if month>0 and month<13:
+          keep12=False
+        else:
+          print(Fore.BLACK)
+          print("Please recheck.")
+          print(Fore.RESET)
+          continue
+      except Exception: 
+        continue
+    keep13=True
+    while keep13==True:
+      try:
+        year = int(input("Year: "))
+        if year>1999 and year<2021:
+          keep13=False
+        else:
+          print(Fore.BLACK)
+          print("Please recheck.")
+          print(Fore.RESET)
+          continue
+      except Exception: 
+        continue
+    keep14=True
+    while keep14==True:
+      try:
+        status = input("Bill Status(paid or not_paid): ")
+        if status=="paid":
+          keep14=False
+        elif status=="not_paid":
+          keep14=False
+        else:
+          print(Fore.BLACK)
+          print("Please recheck.")
+          print(Fore.RESET)
+          continue
+      except Exception: 
+        continue
+    keep15=True
+    while keep15==True:
+      try:
+        print("Bill types:\nGas Bill | Electricity Bill | Monthly Bill | Water Bill | Taxes | Other")
+        type_ = input("Bill Type: ")
+        if type_=="Gas Bill": 
+          keep15=False
+        elif type_=="Electricity Bill": 
+          keep15=False
+        elif type_=="Monthly Bill": 
+          keep15=False
+        elif type_=="Water Bill": 
+          keep15=False
+        elif type_=="Taxes": 
+          keep15=False
+        elif type_=="Other": 
+          keep15=False
+        else:
+          print(Fore.BLACK)
+          print("Please recheck.")
+          print(Fore.RESET)
+          continue
+      except Exception: 
+        continue
       productname = input("Product Name: ")
       clas_input = "/".join([str(ID),str(total),str(day),str(month),str(year),str(status),str(type_),str(productname)])
-      try:      
-        cls1 = clas_input.split("/")
-        if int(cls1[2])>31 or int(cls1[2])<1:
-          print(Fore.RED)
-          print("Check the date.")
-          print(Fore.RESET)
-          continue
-        elif int(cls1[3])<1 or int(cls1[3])>12:
-          print(Fore.RED)
-          print("Check the month.")
-          print(Fore.RESET)
-          continue
-        elif int(cls1[4])<2000:
-          print(Fore.RED)
-          print("Check the year.")
-          print(Fore.RESET)
-          continue
-        else:
-          cls2 = AllBills(cls1[0],cls1[1],cls1[2],cls1[3], cls1[4],cls1[5],cls1[6],cls1[7],user)  
-          db.appendObjectInto("All Bills",cls2)
-          print(Fore.GREEN)
-          print("Bill added!")
-          print(Fore.RESET)
-          keep_going=False          
-      except Exception:
-        pass
+    cls1=clas_input  
+    cls2 = AllBills(cls1[0],cls1[1],cls1[2],cls1[3], cls1[4],cls1[5],cls1[6],cls1[7],username)  
+    db.appendObjectInto("All Bills",cls2)
+    print(Fore.GREEN)
+    print("Bill added!")
+    print(Fore.RESET)
+    
   @staticmethod
   def check_smaller_date(list1,min_day,min_month,min_year):
     returned_list = []
