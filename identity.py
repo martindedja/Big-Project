@@ -111,16 +111,14 @@ class Accounts():
         continue
       except Exception:
         continue
-      
-
     fullname = input("Enter full name: ")
     keep4=True
     while keep4==True:
       try:
-        phone_no = input("Enter phone number: ")  
-        if len(phone_no)==10:
-          keep4=False
-        elif len(phone_no)==12:
+        phone_no = input("Enter phone number: +3556")  
+        if(check1(phone_no))==True:
+          phone_no="3556"+phone_no
+          print(phone_no)
           keep4=False
         else:
           print(Fore.BLACK)
