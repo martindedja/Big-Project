@@ -230,7 +230,7 @@ class ManageBills():
     print("Press 2 to filter by Deadline: ")
     print("Press 3 to filter by Total: ")
     print("Press 4 to go back to main menu: ")
-    user_input= int(input(">\n"))
+    user_input= int(input(">"))
     if user_input == 1:
       type_input = input("Give the type of bill you'd like to search: ")
       if len(db.getObjectsFrom("All Bills", lambda x: x.username == username))!=0:
