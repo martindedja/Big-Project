@@ -2,6 +2,7 @@ from database import Database
 from bills import ManageBills
 import getpass
 from colorama import Fore
+from checkit import *
 class Account:
   def __init__(self,username,Email,Password,FullName,PhoneNumber,Age):
     self.username = username
@@ -68,29 +69,67 @@ class Login():
 class Accounts():
   @staticmethod
   def createAcc(db):
-    username = input("Enter username: ")
-    email = input("Enter email: ")
+    keep1=True
+    while keep1==True:
+      try:
+        username = input("Enter username: ")
+        if len(db.getObjectsFrom("Accounts",lambda x:x.username==username))!=0:
+          print(Fore.BLACK)
+          print("Please enter a different username.")
+          print(Fore.RESET)
+          continue
+      except Exception:
+        continue
+      else:
+        keep1=False
+    keep2=True
+    while keep2==True:
+      try:
+        email = input("Enter email: ")
+        if check(email)==True:
+          keep2=False
+        else:
+          print(Fore.BLACK)
+          print("Please recheck.")
+          print(Fore.RESET)
+          continue
+      except Exception: 
+        print(Fore.BLACK)
+        print("Please recheck.")
+        print(Fore.RESET)
+        continue
+      
     password = input("Enter password: ")
     fullname = input("Enter full name: ")
-    phone_no = input("Enter phone number: ")
-    age = input("Enter age: ")
-
+    keep4=True
+    while keep4==True:
+      try:
+        phone_no = input("Enter phone number: ")  
+        if len(phone_no)==10:
+          keep4=False
+        else:
+          print(Fore.BLACK)
+          print("Please recheck.")
+          print(Fore.RESET)
+          continue
+      except Exception:
+        (Fore.BLACK)
+        print("Please recheck.") 
+        (Fore.RESET)
+        continue
+    keep3=True
+    while keep3==True:
+      try:
+        age = int(input("Enter age: "))
+      except Exception: continue
+      else: keep3=False
     class_input = "/".join([str(username), str(email), str(password), str(fullname), str(phone_no), str(age)])
     cl1 = class_input.split("/")
-
     cl2 = Account(cl1[0],cl1[1],cl1[2],cl1[3],cl1[4],int(cl1[5]))
-    max=0
-    for i in cl1[4]:
-      max+=1
-      if len(db.getObjectsFrom("Accounts",lambda x:x.username==cl1[0]))!=0:
-        print(Fore.BLACK)
-        print("Please enter a different username.")
-        print(Fore.RESET)
-      else:
-        db.appendObjectInto("Accounts",cl2)
-        print(Fore.GREEN)
-        print("Account created.")
-        print(Fore.RESET)
+    db.appendObjectInto("Accounts",cl2)
+    print(Fore.GREEN)
+    print("Account created.")
+    print(Fore.RESET)
   @staticmethod
   def deleteAcc(db,username):
     password = getpass.getpass("Enter password again to confirm deletion: ")
