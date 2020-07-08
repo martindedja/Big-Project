@@ -87,7 +87,13 @@ class Accounts():
       try:
         email = input("Enter email: ")
         if check(email)==True:
-          keep2=False
+          if len(db.getObjectsFrom("Accounts",lambda x:x.email==email))==0:
+            keep2=False
+          else:
+            print(Fore.BLACK)
+            print("This email is already in use.")
+            print(Fore.RESET)
+            continue
         else:
           print(Fore.BLACK)
           print("Please recheck.")
@@ -111,14 +117,44 @@ class Accounts():
         continue
       except Exception:
         continue
-    fullname = input("Enter full name: ")
+    keep8=True
+    while keep8==True:
+      try:
+        max=0
+        firstname = input("Enter your first name: ")
+        lastname= input("Enter your last name: ")
+        for name in firstname:
+          for char in name:
+            if char.isdigit(): max=1
+            elif char.isalpha(): max=0 
+            else: max=1
+        for w in lastname:
+          for char in w:
+            if char.isdigit(): max=1
+            elif char.isalpha():max=0
+            else:max=1
+        if max==1:
+          print(Fore.BLACK)
+          print("Your  name can only include letters.")
+          print(Fore.RESET)
+          continue
+        else:
+          fullname= firstname +" "+lastname
+          keep8=False
+      except Exception:continue
     keep4=True
     while keep4==True:
       try:
         phone_no = input("Enter phone number: +3556")  
         if(check1(phone_no))==True:
           phone_no="3556"+phone_no
-          keep4=False
+          if len(db.getObjectsFrom("Accounts",lambda x:x.phone_no==phone_no))==0:
+            keep4=False
+          else:
+            print(Fore.BLACK)
+            print("this phone number is already in use")
+            print(Fore.RESET)
+            continue           
         else:
           print(Fore.BLACK)
           print("Please recheck.")
