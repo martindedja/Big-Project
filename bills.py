@@ -76,6 +76,7 @@ class ManageBills():
       month = input("Month: ")
       year = input("Year: ")
       status = input("Bill Status: ")
+      print("Bill types:\nGas Bill | Electricity Bill | Monthly Bill | Water Bill | Taxes | Other")
       type_ = input("Bill Type: ")
       productname = input("Product Name: ")
       clas_input = "/".join([str(ID),str(total),str(day),str(month),str(year),str(status),str(type_),str(productname)])

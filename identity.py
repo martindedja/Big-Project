@@ -118,7 +118,6 @@ class Accounts():
         phone_no = input("Enter phone number: +3556")  
         if(check1(phone_no))==True:
           phone_no="3556"+phone_no
-          print(phone_no)
           keep4=False
         else:
           print(Fore.BLACK)
