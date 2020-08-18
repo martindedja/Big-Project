@@ -19,7 +19,7 @@ class Database:
             fd = open(self.mainpath+path.sep+tname,"w")
             fd.close()
         else :
-            # science the file already exists just add the entry into the dictionary
+            # since the file already exists just add the entry into the dictionary
             self.tables[tname]=Table(self.mainpath+path.sep+tname,ttype,toObject)
     # get a list of objects from a specific table. you can also filter by a lambda function
     def getObjectsFrom(self,tname,condition=lambda a:True):
@@ -32,11 +32,15 @@ class Database:
             lines = fp.readlines()
             for line in lines:
                 # construct the object by the specific function
-                record = table.toObject(line)
-                # if object fullfill the condition then add into list
-                print("testing",condition(record))
-                if( condition(record)):
-                    records.append(record)
+                try:
+                  line = line.split("\n")[0]
+                  
+                  record = table.toObject(line)
+                  # if object fullfill the condition then add into list
+                  if(condition(record)):
+                      records.append(record)
+                except:
+                  print(line)
             # close the file and then return the ist of selected objects
             fp.close()
             return records
@@ -46,11 +50,11 @@ class Database:
         table = self.tables[tname]
         # after taking table data open file
         with open(table.getpath() ,"a") as fp:
-            for  record in records:
+            for record in records:
                 # if object is of specififed type
-                if table.checkType(record):
+                #if table.checkType(record):##################
                     # write it into the file
-                    fp.write(record.toString()+"\n")
+                fp.write(record.toString()+"\n")
             fp.close()
     def appendObjectInto(self,tname,obj):
         self.appendObjectsInto(tname,[obj])
@@ -61,7 +65,7 @@ class Database:
         # read all records
         with (open(table.getpath(),"r")) as fp:
             # read all lines of data one line for one object
-            lines = fp.readlines()
+            lines = fp.readlines()         
             fp.close()
         # write onnly those that do not fullfill the condition
         with(open(table.getpath(),"w") )as fp:
@@ -69,9 +73,13 @@ class Database:
             for line in lines:
                 # construct the apropriate object using the
                 # function toObject of the respective table
-                record = table.toObject(line)
-                if(not condition(record)):
-                    fp.write(line)
+                try:
+                  line = line.split("\n")[0]
+                  record = table.toObject(line)
+                  if(not condition(record)):
+                    fp.write(line+"\n")
+                except:
+                  print("error writing line")
             fp.close()
         return(101,"file not found")
     # this function writes objects in a file but the
@@ -104,4 +112,3 @@ class Table :
     def checkType(self,ttype):return self.__type==type(ttype)
     # returns a line into an object of specified type of table
     def toObject(self,line):return self.__toObject(line)
-# simple base object
