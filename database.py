@@ -112,4 +112,3 @@ class Table :
     def checkType(self,ttype):return self.__type==type(ttype)
     # returns a line into an object of specified type of table
     def toObject(self,line):return self.__toObject(line)
-# simple base object
